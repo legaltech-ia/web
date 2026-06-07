@@ -1,0 +1,109 @@
+<div class="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto w-full max-w-md">
+    <div class="flex justify-center text-indigo-400">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 drop-shadow-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
+      </svg>
+    </div>
+<h2 class="mt-4 text-center text-3xl font-extrabold text-slate-100 tracking-tight">{{ messages.register.title }}</h2>
+    <p class="mt-2 text-center text-sm text-slate-400">{{ messages.register.subtitle }}</p>
+  </div>
+  
+  <div class="mt-8 sm:mx-auto w-full max-w-md">
+    <div class="bg-slate-900 py-8 px-4 shadow-xl rounded-xl sm:px-10 border border-slate-800">
+      
+      <div *ngIf="successMessage" class="mb-4 p-4 bg-emerald-950/70 border border-emerald-700 rounded-lg">
+        <p class="text-sm text-emerald-300">{{ successMessage }}</p>
+      </div>
+
+      <div *ngIf="errorMessage" class="mb-4 p-4 bg-rose-950/70 border border-rose-700 rounded-lg">
+        <p class="text-sm text-rose-300">{{ errorMessage }}</p>
+      </div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        
+        <div>
+          <label class="block text-sm font-medium text-slate-300">{{ messages.register.emailLabel }}</label>
+          <div class="mt-1">
+            <input formControlName="email" type="email" 
+              class="appearance-none block w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-lg shadow-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          </div>
+          <p *ngIf="registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched" class="mt-1 text-sm text-red-600">{{ messages.register.invalidEmail }}</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-300">{{ messages.register.usernameLabel }}</label>
+          <div class="mt-1">
+            <input formControlName="username" type="text" 
+              class="appearance-none block w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-lg shadow-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          </div>
+          <p *ngIf="registerForm.get('username')?.hasError('minlength') && registerForm.get('username')?.touched" class="mt-1 text-sm text-red-600">{{ messages.register.usernameMinLength }}</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-300">{{ messages.register.passwordLabel }}</label>
+          <div class="mt-1">
+            <input formControlName="password" type="password" 
+              class="appearance-none block w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-lg shadow-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          </div>
+          <p *ngIf="registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched" class="mt-1 text-sm text-red-600">{{ messages.register.passwordMinLength }}</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-300">{{ messages.register.confirmPasswordLabel }}</label>
+          <div class="mt-1">
+            <input formControlName="confirmPassword" type="password" 
+              class="appearance-none block w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-lg shadow-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          </div>
+          <p *ngIf="registerForm.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched" class="mt-1 text-sm text-red-600">{{ messages.register.passwordMismatch }}</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-300">{{ messages.register.phoneLabel }}</label>
+          <div class="mt-1">
+            <input formControlName="phoneNumber" type="tel" placeholder="{{ messages.register.phonePlaceholder }}"
+              (input)="formatPhoneNumber($event)"
+              class="appearance-none block w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-lg shadow-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          </div>
+          <p *ngIf="registerForm.get('phoneNumber')?.hasError('invalidPhone') && registerForm.get('phoneNumber')?.touched" class="mt-1 text-sm text-red-600">{{ messages.register.phoneFormatError }}</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-300">Inspección (Municipio)</label>
+          <div class="mt-1 relative">
+            <input formControlName="municipalityName" type="text" placeholder="Busca tu municipio..."
+              class="appearance-none block w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-lg shadow-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <input formControlName="municipalityCode" type="hidden">
+            
+            <div *ngIf="showMunicipalityDropdown && filteredMunicipalities.length > 0" class="absolute z-10 w-full mt-1 bg-slate-900 border border-slate-700 rounded-lg shadow-lg max-h-64 overflow-y-auto">
+              <button *ngFor="let municipality of filteredMunicipalities" type="button" (click)="selectMunicipality(municipality)"
+                class="w-full text-left px-4 py-2 hover:bg-slate-800 focus:bg-slate-800 transition-colors text-sm text-slate-100">
+                <span class="font-medium">{{ municipality.name }}</span> - <span class="text-slate-400 text-xs">{{ municipality.department }} ({{ municipality.code }})</span>
+              </button>
+            </div>
+          </div>
+          <p *ngIf="registerForm.get('municipalityName')?.hasError('required') && registerForm.get('municipalityName')?.touched" class="mt-1 text-sm text-red-600">Debes seleccionar un municipio</p>
+        </div>
+
+        <div class="flex gap-3">
+          <button type="submit" [disabled]="registerForm.invalid || isLoading" 
+            class="flex-1 flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 transition-all">
+            {{ isLoading ? messages.register.loadingText : messages.register.registerButton }}
+          </button>
+          <button type="button" (click)="onCancel()" 
+            class="flex-1 flex justify-center py-2.5 px-4 border border-slate-700 rounded-lg shadow-sm text-sm font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all">
+            {{ messages.register.cancelButton }}
+          </button>
+        </div>
+
+      </form>
+
+      <p class="mt-6 text-center text-sm text-slate-400">
+        {{ messages.register.haveAccountText }}
+        <button (click)="goToLogin()" type="button" class="text-indigo-400 hover:text-indigo-300 font-semibold">
+          {{ messages.register.loginLinkText }}
+        </button>
+      </p>
+    </div>
+  </div>
+</div>

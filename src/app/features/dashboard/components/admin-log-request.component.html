@@ -1,0 +1,62 @@
+<div
+  class="absolute z-50 bg-slate-950/95 text-slate-100 shadow-2xl overflow-hidden rounded-lg flex flex-col min-h-0"
+  [style.left.px]="posX"
+  [style.top.px]="posY"
+  [style.width.px]="width"
+  [style.height.px]="consoleHeight"
+>
+  <!-- Header (drag handle) -->
+  <div class="flex items-center justify-between gap-3 px-3 py-2 bg-slate-900/90">
+    <div class="flex items-center gap-3 cursor-move" (mousedown)="onDragStart($event)">
+      <div class="h-2 w-2 rounded-full bg-indigo-400"></div>
+      <p class="text-sm font-semibold tracking-wide">Admin request console</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button
+        type="button"
+        class="text-xs font-semibold text-indigo-300 hover:text-white transition mr-2"
+        (click)="clearLogs()"
+      >
+        Limpiar
+      </button>
+      <button aria-label="Maximizar consola" title="Maximizar" type="button" (click)="toggleMaximize()" class="h-6 w-6 rounded-full flex items-center justify-center hover:bg-slate-800">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
+        </svg>
+      </button>
+      <button aria-label="Cerrar consola" title="Cerrar" (click)="close()" class="h-6 w-6 rounded-full flex items-center justify-center hover:bg-slate-800">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="overflow-y-auto flex-1 p-4 space-y-4 min-h-0">
+    <div *ngFor="let log of logs$ | async" class="rounded-2xl border border-slate-800 bg-slate-900/95 p-4">
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <div class="space-y-1">
+          <div class="text-xs uppercase tracking-[0.25em] text-slate-500">{{ log.method }} {{ log.url }}</div>
+          <div class="text-sm font-medium text-slate-200">Inicio: {{ log.startTime }} · Fin: {{ log.endTime || 'pendiente' }}</div>
+        </div>
+        <div class="text-right text-xs text-slate-400">
+          <div>{{ log.durationMs != null ? log.durationMs + ' ms' : 'en curso' }}</div>
+          <div>Status: {{ log.status != null ? log.status : '...' }}</div>
+        </div>
+      </div>
+
+      <pre class="mt-4 overflow-x-auto rounded-xl bg-slate-950 p-3 text-[11px] leading-5 text-slate-200">
+{{ log.curl }}
+      </pre>
+
+      <div *ngIf="log.responseSummary" class="mt-3 rounded-xl bg-slate-900/90 border border-slate-800 p-3 text-xs text-slate-300">
+        <span class="font-semibold text-slate-100">Respuesta:</span>
+        <pre class="mt-2 overflow-x-auto rounded-lg bg-slate-950 p-2 text-[11px] leading-5 text-slate-200 whitespace-pre-wrap break-all">{{ log.responseSummary }}</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute right-0 top-1/2 h-8 w-3 -translate-y-1/2 cursor-ew-resize" (mousedown)="onResizeStart('right', $event)"></div>
+  <div class="absolute left-1/2 bottom-0 h-3 w-8 -translate-x-1/2 cursor-ns-resize" (mousedown)="onResizeStart('bottom', $event)"></div>
+  <div class="absolute right-0 bottom-0 h-6 w-6 cursor-se-resize" (mousedown)="onResizeStart('bottom-right', $event)"></div>
+</div>

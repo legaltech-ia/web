@@ -1,0 +1,150 @@
+<div class="min-h-screen bg-[#04050b] text-slate-100">
+  <div class="relative overflow-hidden">
+    <div class="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-blue-950/95 via-blue-950/60 to-transparent"></div>
+    <div class="sticky top-0 z-50 relative max-w-7xl mx-auto border-t border-blue-800 border-l-0 border-r-0 bg-blue-950/95/ backdrop-blur-sm px-6 py-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between shadow-2xl shadow-blue-950/30">
+      <div class="flex items-center gap-3">
+        <span class="inline-flex h-11 w-11 items-center justify-center rounded-full bg-slate-100/5 text-sm font-bold text-blue-200">L</span>
+        <div>
+          <p class="text-xs uppercase tracking-[0.35em] text-blue-300">LegalTech</p>
+          <p class="text-sm font-semibold text-white">Tecnología con criterio jurídico v1.0</p>
+        </div>
+      </div>
+      <nav class="hidden md:flex items-center gap-10 text-base text-slate-200">
+        <a class="hover:text-white transition" href="#inicio">Inicio</a>
+        <a class="hover:text-white transition" href="#soluciones">Soluciones</a>
+        <a class="hover:text-white transition" href="#contacto">Contacto</a>
+        <a class="hover:text-white transition" href="#nosotros">Nosotros</a>
+      </nav>
+      <a routerLink="/login" class="inline-flex items-center justify-center rounded-full border border-blue-500 bg-blue-700 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-950/20 transition hover:bg-blue-600">Iniciar sesión</a>
+    </div>
+    <div class="mx-auto mt-2 h-[3px] w-full max-w-7xl rounded-full bg-blue-600/80"></div>
+  </div>
+
+  <main class="max-w-7xl mx-auto px-6 py-10 lg:py-12">
+    <section id="inicio" class="grid gap-10 lg:grid-cols-[1.3fr_0.9fr] items-start">
+      <div class="space-y-6">
+        <span class="inline-flex rounded-full bg-[#02060f] px-4 py-2 text-xs uppercase tracking-[0.35em] text-blue-300">Soluciones legales corporativas</span>
+        <div class="space-y-6 max-w-3xl">
+          <h1 class="text-5xl lg:text-6xl font-semibold tracking-tight text-white">Lleva tus procesos jurídicos a un entorno seguro, eficiente y automatizado.</h1>
+          <p class="text-lg leading-8 text-slate-400">Desarrollamos una experiencia legaltech para firmas y gestoras que requieren gobernanza, trazabilidad y velocidad sin sacrificar control ni seguridad.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a routerLink="/login" class="inline-flex items-center justify-center rounded-full bg-blue-800 px-8 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition">Comenzar ahora</a>
+        </div>
+      </div>
+
+      <div class="rounded-[2rem] border border-blue-950 bg-slate-950/95 p-10 shadow-2xl shadow-black/40">
+        <p class="text-xs uppercase tracking-[0.35em] text-blue-300">Perfil corporativo</p>
+        <h2 class="mt-3 text-3xl font-semibold text-white">LegalTech CO</h2>
+        <div class="mt-8 space-y-6 text-slate-300">
+          <div class="space-y-2 rounded-3xl border border-slate-800 bg-slate-900/80 p-5">
+            <p class="text-sm font-semibold text-white">Plataforma segura</p>
+            <p class="text-sm leading-6 text-slate-400">Un ecosistema con gobernanza clara y controles de acceso para cada agente y proceso.</p>
+          </div>
+          <div class="space-y-2 rounded-3xl border border-slate-800 bg-slate-900/80 p-5">
+            <p class="text-sm font-semibold text-white">Experiencia controlada</p>
+            <p class="text-sm leading-6 text-slate-400">Interfaz diseñada para el equipo legal, con rutinas y reportes que facilitan la operación diaria.</p>
+          </div>
+          <div class="space-y-2 rounded-3xl border border-slate-800 bg-slate-900/80 p-5">
+            <p class="text-sm font-semibold text-white">Escala estratégica</p>
+            <p class="text-sm leading-6 text-slate-400">Escalado modular que acompaña crecimiento sin comprometer seguridad ni rendimiento.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="soluciones" class="mt-20 space-y-10">
+      <div class="grid gap-6 lg:grid-cols-3">
+        <div class="rounded-[2rem] border border-slate-800 bg-slate-950/90 p-8 shadow-xl shadow-slate-950/20">
+          <p class="text-xs uppercase tracking-[0.35em] text-blue-300">Integraciones</p>
+          <h3 class="mt-4 text-xl font-semibold text-white">Conectividad integral</h3>
+          <p class="mt-3 text-slate-400 leading-7">Enlazamos sistemas internos, APIs jurídicas y archivos para que los agentes trabajen con datos consistentes.</p>
+        </div>
+        <div class="rounded-[2rem] border border-slate-800 bg-slate-950/90 p-8 shadow-xl shadow-slate-950/20">
+          <p class="text-xs uppercase tracking-[0.35em] text-blue-300">Automatización</p>
+          <h3 class="mt-4 text-xl font-semibold text-white">Procesos ágiles</h3>
+          <p class="mt-3 text-slate-400 leading-7">Orquestamos tareas legales complejas con reglas claras para mejorar tiempos y reducir errores.</p>
+        </div>
+        <div class="rounded-[2rem] border border-slate-800 bg-slate-950/90 p-8 shadow-xl shadow-slate-950/20">
+          <p class="text-xs uppercase tracking-[0.35em] text-blue-300">Control</p>
+          <h3 class="mt-4 text-xl font-semibold text-white">Trazabilidad total</h3>
+          <p class="mt-3 text-slate-400 leading-7">Cada acción queda registrada para auditoría y transparencia en los procesos legales.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="valor" class="mt-20 rounded-[2rem] border border-slate-800 bg-[#050712] p-10 shadow-2xl shadow-slate-950/40">
+      <div class="grid gap-10 lg:grid-cols-[0.9fr_0.9fr] items-center">
+        <div>
+          <p class="text-xs uppercase tracking-[0.35em] text-blue-300">Valor diferencial</p>
+          <h2 class="mt-4 text-3xl font-semibold text-white">Rompe la inercia de la gestión legal con una plataforma que piensa en tu equipo.</h2>
+          <p class="mt-6 text-slate-400 leading-8">Nuestra propuesta combina diseño corporativo, agentes inteligentes y gobernanza para que la operación legal sea más rápida, segura y eficiente.</p>
+        </div>
+        <div class="rounded-[2rem] border border-blue-950 bg-slate-950/95 p-8">
+          <p class="text-sm font-semibold uppercase tracking-[0.35em] text-blue-300">Impacto tangible</p>
+          <ul class="mt-6 space-y-4 text-slate-300">
+            <li class="flex gap-3">
+              <span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-blue-500"></span>
+              <span>Reducción de tiempos en decisiones jurídicas.</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-blue-500"></span>
+              <span>Mayor control documental para auditorías y cumplimiento.</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-blue-500"></span>
+              <span>Experiencia corporativa consistente para equipos legales.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="nosotros" class="mt-10 rounded-[2rem] border border-slate-800 bg-[#050712] p-8 shadow-2xl shadow-slate-950/40">
+      <div class="max-w-4xl w-full mx-auto px-4">
+        <h2 class="text-2xl font-semibold text-white text-center">Nosotros</h2>
+        <div class="mt-4 space-y-4">
+          <p class="text-slate-300 leading-7 text-justify w-full">Somos una empresa colombiana nacida de la convergencia entre el rigor del derecho y la frontera de la innovación tecnológica. Nos especializamos en transformar el sector jurídico mediante la integración inteligente de múltiples arquitecturas de Inteligencia Artificial, diseñadas específicamente para optimizar, acelerar y elevar la precisión del trabajo legal.</p>
+
+          <p class="text-slate-300 leading-7 text-justify w-full">Entendemos que en el mundo del derecho no hay margen para el error. Por eso, nuestro enfoque no se limita al uso de una sola tecnología; orquestamos un ecosistema de IA avanzada para procesar la información de manera multidimensional, garantizando a firmas, abogados y departamentos jurídicos un acceso a datos estructurados, análisis profundos y respuestas de absoluta confiabilidad. Combinamos la calidez y el entendimiento del contexto local con estándares de ingeniería de nivel global para ser el copiloto estratégico de la justicia moderna.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="mt-12 rounded-[2rem] border border-slate-800 bg-slate-950/90 p-8 shadow-2xl shadow-slate-950/40">
+      <div class="max-w-7xl mx-auto grid gap-6 lg:grid-cols-2 items-start">
+        <div>
+          <h2 class="text-2xl font-semibold text-white">Contacto</h2>
+          <p class="mt-4 text-slate-300">Email: <a href="mailto:contacto&#64;legaltech.com.co" class="text-blue-400">contacto&#64;legaltech.com.co</a></p>
+          <p class="mt-2 text-slate-300">Tel: +57 305 390 7634</p>
+          <p class="mt-1 text-slate-300">WP: +57 305 390 7534</p>
+          <p class="mt-2 text-slate-300">Facebook: <a href="https://www.facebook.com/legaltTechColombia" class="text-blue-400" target="_blank" rel="noopener noreferrer">legaltTechColombia</a></p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-white">Horario de atención</h3>
+          <p class="mt-2 text-slate-300">Lun - Vie: 8:00 - 18:00 (COT)</p>
+          <p class="mt-4 text-slate-300">Si nos contactas por WhatsApp, indícanos tu nombre y una breve descripción del asunto para agilizar la respuesta.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="fixed bottom-6 right-6 z-50">
+    <details class="relative">
+      <summary class="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-blue-700 text-white shadow-lg shadow-blue-950/20 transition hover:bg-blue-600">
+        <svg viewBox="0 0 24 24" fill="none" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 5H20V15H6L4 17V5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 9H16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M8 13H12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </summary>
+      <div class="absolute right-0 bottom-16 w-64 rounded-3xl border border-slate-800 bg-slate-950/95 p-4 text-sm text-slate-300 shadow-2xl shadow-blue-950/30">
+        <p class="font-semibold text-white">¿Necesitas ayuda?</p>
+        <p class="mt-2 leading-6 text-slate-400">Inicia una conversación rápida con soporte.</p>
+        <button class="mt-4 inline-flex w-full justify-center rounded-full bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-600 transition">Abrir chat</button>
+      </div>
+    </details>
+  </div>
+</div>
