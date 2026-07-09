@@ -1,31 +1,32 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AddNationalNormComponent } from './add-national-norm.component';
 import { LegalBasisService } from '../../services/legal-basis.service';
 import { LegalBasis, LegalBasisDetail } from '../../models/legal-basis.model';
 
 @Component({
   selector: 'app-national-norms',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AddNationalNormComponent],
   templateUrl: './national-norms.component.html'
 })
 export class NationalNormsComponent implements OnInit {
   private legalBasisService = inject(LegalBasisService);
 
   norms: LegalBasis[] = [];
-  searchTerm: string = '';
-  public isLoading: boolean = false;
-  showDetailModal = false;
+  searchTerm = '';
+  public isLoading = false;
   selectedNormDetail: LegalBasisDetail | null = null;
+  showAddNormComponent = false;
 
+  sortBy = 'publishedAt';
+  sortDir: 'asc' | 'desc' = 'asc';
   currentPage = 0;
   pageSize = 10;
   totalPages = 0;
   totalItems = 0;
   pages: number[] = [];
-  sortBy = 'publishedAt';
-  sortDir: 'asc' | 'desc' = 'asc';
 
   ngOnInit(): void {
     this.fetchData();
@@ -37,7 +38,7 @@ export class NationalNormsComponent implements OnInit {
       .getNationalNorms(this.searchTerm.trim(), this.currentPage, this.pageSize, this.sortBy, this.sortDir)
       .subscribe({
         next: (data) => {
-          this.norms = data.content;
+          this.norms = data.content || [];
           this.currentPage = data.number ?? this.currentPage;
           this.pageSize = data.size ?? this.pageSize;
           this.totalPages = data.totalPages ?? 0;
@@ -64,7 +65,6 @@ export class NationalNormsComponent implements OnInit {
       this.sortBy = field;
       this.sortDir = 'asc';
     }
-
     this.fetchData();
   }
 
@@ -81,7 +81,7 @@ export class NationalNormsComponent implements OnInit {
     this.legalBasisService.getNormativeById(id).subscribe({
       next: (data) => {
         this.selectedNormDetail = data;
-        this.showDetailModal = true;
+        this.showAddNormComponent = true;
         this.isLoading = false;
       },
       error: (err) => {
@@ -91,8 +91,19 @@ export class NationalNormsComponent implements OnInit {
     });
   }
 
-  closeDetailModal(): void {
-    this.showDetailModal = false;
+  openAddNorm(): void {
     this.selectedNormDetail = null;
+    this.showAddNormComponent = true;
+  }
+
+  closeAddNormComponent(): void {
+    this.showAddNormComponent = false;
+    this.selectedNormDetail = null;
+  }
+
+  onNormSaved(): void {
+    this.showAddNormComponent = false;
+    this.selectedNormDetail = null;
+    this.fetchData();
   }
 }

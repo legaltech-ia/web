@@ -29,6 +29,10 @@ export class LegalBasisService {
   }
 
   getNormativeById(normative: string | number): Observable<LegalBasisDetail> {
-    return this.http.get<LegalBasisDetail>(`${this.apiUrl}/normative/${normative}`);
+    return this.http.get<LegalBasisDetail>(`${this.apiUrl}/${normative}`);
+  }
+
+  saveNationalNorm(payload: LegalBasisDetail): Observable<LegalBasisDetail> {
+    return this.http.post<LegalBasisDetail>(this.apiUrl, payload);
   }
 }

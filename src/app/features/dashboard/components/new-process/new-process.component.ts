@@ -29,6 +29,7 @@ export class NewProcessComponent implements OnInit {
 
   ngOnInit(): void {
     this.processForm = this.fb.group({
+      processType: ['', [Validators.required]],
       generalInformation: ['', [Validators.required, Validators.minLength(10)]]
     });
 
@@ -58,6 +59,7 @@ export class NewProcessComponent implements OnInit {
 
     const dataPart: ProcessRequest = {
       generalInformation: this.processForm.value.generalInformation,
+      processType: this.processForm.value.processType,
       fecha: this.getCurrentDateCO()
     };
 

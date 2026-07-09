@@ -1,3 +1,10 @@
+export interface NationalNormArticle {
+  id?: string | number;
+  number: string;
+  title: string;
+  content: string;
+}
+
 export interface LegalBasis {
   id: string | number;
   title: string;
@@ -8,6 +15,7 @@ export interface LegalBasis {
 
 export interface LegalBasisDetail extends LegalBasis {
   description: string;
+  articles?: NationalNormArticle[];
 }
 
 export interface NationalNormsPage {

@@ -1,0 +1,168 @@
+<div class="mt-6 bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
+  <div class="w-full max-w-full overflow-hidden rounded-2xl">
+    <div class="p-5 border-b border-slate-800 flex justify-between items-center bg-slate-900/60">
+      <div>
+        <h3 class="text-sm font-semibold text-slate-100">Registrar Norma Nacional</h3>
+        <p class="text-xs text-slate-500 mt-1">El artículo será agregado a la norma antes de guardar en el servidor.</p>
+      </div>
+      <button (click)="closeModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs uppercase tracking-widest transition-all">
+        Cerrar
+      </button>
+    </div>
+
+    <div class="p-6 space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <label class="block text-slate-300 text-sm">
+          <span class="text-slate-400 text-xs uppercase tracking-widest">Título</span>
+          <input type="text" [(ngModel)]="createNorm.title" [ngClass]="{ 'border-rose-500 ring-2 ring-rose-500/40': showNormValidation && !createNorm.title.trim() }" class="mt-2 w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:border-blue-500" />
+          <p *ngIf="showNormValidation && !createNorm.title.trim()" class="mt-1 text-rose-400 text-xs">El título es obligatorio.</p>
+        </label>
+        <label class="block text-slate-300 text-sm">
+          <span class="text-slate-400 text-xs uppercase tracking-widest">Tipo</span>
+          <input type="text" [(ngModel)]="createNorm.type" [ngClass]="{ 'border-rose-500 ring-2 ring-rose-500/40': showNormValidation && !createNorm.type.trim() }" class="mt-2 w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:border-blue-500" />
+          <p *ngIf="showNormValidation && !createNorm.type.trim()" class="mt-1 text-rose-400 text-xs">El tipo es obligatorio.</p>
+        </label>
+        <label class="block text-slate-300 text-sm">
+          <span class="text-slate-400 text-xs uppercase tracking-widest">Publicado</span>
+          <input type="date" [(ngModel)]="createNorm.publishedAt" [ngClass]="{ 'border-rose-500 ring-2 ring-rose-500/40': showNormValidation && !createNorm.publishedAt.trim() }" class="mt-2 w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:border-blue-500" />
+          <p *ngIf="showNormValidation && !createNorm.publishedAt.trim()" class="mt-1 text-rose-400 text-xs">La fecha de publicación es obligatoria.</p>
+        </label>
+        <label class="block text-slate-300 text-sm">
+          <span class="text-slate-400 text-xs uppercase tracking-widest">URL de fuente</span>
+          <input type="url" [(ngModel)]="createNorm.sourceUrl" class="mt-2 w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:border-blue-500" />
+        </label>
+      </div>
+
+      <div class="space-y-2">
+        <label class="block text-slate-300 text-sm">
+          <span class="text-slate-400 text-xs uppercase tracking-widest">Descripción</span>
+          <textarea [(ngModel)]="createNorm.description" rows="4" [ngClass]="{ 'border-rose-500 ring-2 ring-rose-500/40': showNormValidation && !createNorm.description.trim() }" class="mt-2 w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-slate-100 focus:outline-none focus:border-blue-500"></textarea>
+          <p *ngIf="showNormValidation && !createNorm.description.trim()" class="mt-1 text-rose-400 text-xs">La descripción es obligatoria.</p>
+        </label>
+      </div>
+
+      <div class="bg-slate-800/40 border border-slate-700 rounded-2xl p-4 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <p class="text-slate-100 font-semibold">Artículos</p>
+            <p class="text-slate-500 text-xs">Agrega, edita o elimina artículos de la norma.</p>
+          </div>
+          <button type="button" (click)="openArticleModal()" aria-label="Agregar artículo" class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-500 text-white transition-all">
+            +
+          </button>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+          <input
+            type="text"
+            [(ngModel)]="articleFilter"
+            (keyup.enter)="applyArticleFilter()"
+            placeholder="Filtrar artículos..."
+            class="w-full sm:w-80 px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <div class="flex flex-wrap gap-2">
+            <button
+              type="button"
+              (click)="changeArticleSort('title')"
+              class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs uppercase tracking-wider"
+            >Título {{ articleSortBy === 'title' ? (articleSortDir === 'asc' ? '▲' : '▼') : '' }}</button>
+            <button
+              type="button"
+              (click)="changeArticleSort('number')"
+              class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs uppercase tracking-wider"
+            >Número {{ articleSortBy === 'number' ? (articleSortDir === 'asc' ? '▲' : '▼') : '' }}</button>
+          </div>
+        </div>
+
+        <div *ngIf="createNorm.articles?.length; else noArticles" class="overflow-x-auto rounded-lg border border-slate-800">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr class="bg-slate-800/80 text-slate-400 uppercase tracking-wider text-[11px]">
+                <th class="px-3 py-2 border-b border-slate-700">#</th>
+                <th class="px-3 py-2 border-b border-slate-700 cursor-pointer" (click)="changeArticleSort('title')">Título <span class="ml-1">{{ articleSortBy === 'title' ? (articleSortDir === 'asc' ? '▲' : '▼') : '' }}</span></th>
+                <th class="px-3 py-2 border-b border-slate-700 cursor-pointer" (click)="changeArticleSort('number')">Número <span class="ml-1">{{ articleSortBy === 'number' ? (articleSortDir === 'asc' ? '▲' : '▼') : '' }}</span></th>
+                <th class="px-3 py-2 border-b border-slate-700">Contenido</th>
+                <th class="px-3 py-2 border-b border-slate-700 text-right">Acciones</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800">
+              <tr *ngFor="let article of displayedArticles; let i = index" class="hover:bg-slate-800/30 transition-colors">
+                <td class="px-2 py-1 text-slate-300">{{ articlePageStart + i + 1 }}</td>
+                <td class="px-2 py-1 text-slate-200 truncate max-w-[200px]" [title]="article.title">{{ article.title }}</td>
+                <td class="px-2 py-1 text-slate-400">{{ article.number }}</td>
+                <td class="px-2 py-1 text-slate-400 truncate max-w-[220px]" [title]="article.content">{{ article.content }}</td>
+                <td class="px-2 py-1 text-right space-x-1">
+                  <button type="button" (click)="editArticle(article, articlePageStart + i)" class="px-2 h-8 inline-flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold transition-all" aria-label="Editar artículo">
+                    ✏ Editar
+                  </button>
+                  <button type="button" (click)="removeArticle(articlePageStart + i)" aria-label="Eliminar artículo" class="w-8 h-8 inline-flex items-center justify-center bg-rose-600 hover:bg-rose-500 text-white rounded-lg">−</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div *ngIf="sortedArticles.length > articlePageSize" class="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-slate-300">
+          <p>Mostrando {{ displayedArticles.length }} de {{ sortedArticles.length }} artículos</p>
+          <div class="flex items-center gap-2">
+            <button type="button" [disabled]="articlePage === 0" (click)="goToArticlePage(articlePage - 1)" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg disabled:opacity-50">Anterior</button>
+            <span class="px-2">Página {{ articlePage + 1 }} de {{ articleTotalPages }}</span>
+            <button type="button" [disabled]="articlePage >= articleTotalPages - 1" (click)="goToArticlePage(articlePage + 1)" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 rounded-lg disabled:opacity-50">Siguiente</button>
+          </div>
+        </div>
+
+        <ng-template #noArticles>
+          <div class="px-4 py-6 border border-dashed border-slate-700 rounded-2xl text-slate-500 text-sm text-center">
+            No hay artículos agregados todavía.
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="p-5 border-t border-slate-800 bg-slate-950/20 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <button type="button" (click)="closeModal()" class="px-5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-bold transition-all border border-slate-700 uppercase tracking-wider">
+        Cerrar
+      </button>
+      <button type="button" (click)="saveNorm()" [disabled]="isLoading" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition-all border border-emerald-500 uppercase tracking-wider">
+        Guardar norma
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="showArticleModal" class="fixed inset-0 z-90 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-sm animate-in fade-in duration-300">
+    <div class="bg-slate-900 border border-slate-800 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden">
+      <div class="p-5 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
+        <div>
+          <h3 class="text-base font-semibold text-slate-100">{{ articleFormMode === 'edit' ? 'Editar artículo' : 'Agregar artículo' }}</h3>
+          <p class="text-xs text-slate-500">Completa los campos para el artículo de ley.</p>
+        </div>
+        <button (click)="closeArticleModal()" class="p-2 hover:bg-slate-800 rounded-full text-slate-400 hover:text-white transition-all text-2xl">&times;</button>
+      </div>
+      <div class="p-6 space-y-4">
+        <label class="block text-slate-300 text-sm">
+          <span class="text-slate-400 text-xs uppercase tracking-widest">Número</span>
+          <input type="text" [(ngModel)]="articleForm.number" [ngClass]="{ 'border-rose-500 ring-2 ring-rose-500/40': showArticleValidation && !articleForm.number.trim() }" class="mt-2 w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:border-blue-500" />
+          <p *ngIf="showArticleValidation && !articleForm.number.trim()" class="mt-1 text-rose-400 text-xs">El número es obligatorio.</p>
+        </label>
+        <label class="block text-slate-300 text-sm">
+          <span class="text-slate-400 text-xs uppercase tracking-widest">Título</span>
+          <input type="text" [(ngModel)]="articleForm.title" [ngClass]="{ 'border-rose-500 ring-2 ring-rose-500/40': showArticleValidation && !articleForm.title.trim() }" class="mt-2 w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:border-blue-500" />
+          <p *ngIf="showArticleValidation && !articleForm.title.trim()" class="mt-1 text-rose-400 text-xs">El título del artículo es obligatorio.</p>
+        </label>
+        <label class="block text-slate-300 text-sm">
+          <span class="text-slate-400 text-xs uppercase tracking-widest">Contenido</span>
+          <textarea rows="4" [(ngModel)]="articleForm.content" [ngClass]="{ 'border-rose-500 ring-2 ring-rose-500/40': showArticleValidation && !articleForm.content.trim() }" class="mt-2 w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-slate-100 focus:outline-none focus:border-blue-500"></textarea>
+          <p *ngIf="showArticleValidation && !articleForm.content.trim()" class="mt-1 text-rose-400 text-xs">El contenido es obligatorio.</p>
+        </label>
+      </div>
+      <div class="p-5 border-t border-slate-800 bg-slate-950/20 flex justify-end gap-3">
+        <button type="button" (click)="closeArticleModal()" class="px-5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-bold transition-all border border-slate-700 uppercase tracking-wider">
+          Cancelar
+        </button>
+        <button type="button" (click)="saveArticle()" class="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition-all uppercase tracking-wider">
+          Guardar artículo
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 export interface ProcessRequest {
   generalInformation: string;
+  processType?: string;
   fecha: string;
 }
 
