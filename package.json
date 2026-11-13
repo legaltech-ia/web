@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
-    "deploy": "npm run build && aws s3 sync dist/web/browser/ s3://legaltech-web-app --delete --cache-control \"max-age=31536000, public\" --exclude \"index.html\" && aws s3 cp dist/web/browser/index.html s3://legaltech-web-app/index.html --cache-control \"no-cache, no-store, must-revalidate\" && aws cloudfront create-invalidation --distribution-id E2DDD5J2GYCJDS --paths \"/index.html\""
+    "deploy": "ng build --configuration production && bash ../infrastructure/frontend-apex/deploy.sh"
   },
   "dependencies": {
     "@angular/animations": "^18.0.0",
@@ -31,6 +31,8 @@
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "~5.4.5"
+  },
+  "volta": {
+    "node": "22.22.3"
   }
 }
-
